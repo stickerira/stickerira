@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -66,7 +66,7 @@
     }
 
     .small-pair input[type="number"] {
-      width: 30px;
+      width: 60px;
       padding: 6px;
       font-size: 14px;
       border: 2px solid #f2cc0c;
