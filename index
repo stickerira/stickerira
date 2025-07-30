@@ -1,0 +1,243 @@
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор эмодзи — Черновик</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800&family=Rubik&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Rubik', sans-serif;
+      background: #fff;
+      color: #6F6B6C;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #604DB6;
+      margin-top: 30px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    p {
+      margin: 10px 0 20px;
+      font-size: 16px;
+    }
+
+    .inline-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .inline-row label {
+      flex: 1 1 150px;
+    }
+
+    .inline-row select {
+      padding: 6px;
+      font-size: 14px;
+      border: 2px solid #f2cc0c;
+      border-radius: 5px;
+      color: #6F6B6C;
+    }
+
+    .small-pair {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .small-pair label {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .small-pair input[type="number"] {
+      width: 30px;
+      padding: 6px;
+      font-size: 14px;
+      border: 2px solid #f2cc0c;
+      border-radius: 5px;
+      color: #6F6B6C;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.2);
+      accent-color: #604DB6;
+      margin-right: 8px;
+    }
+
+    #total {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #6F6B6C;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Что включить в базовый набор?</h2>
+    <p>Отметьте галочкой нужное и выберите стиль.</p>
+    <div class="inline-row">
+      <label><input type="checkbox" id="rus"> Алфавит RUS
+      <select id="rusType">
+        <option value="static">Статичный</option>
+        <option value="animated">Анимированный</option>
+      </select></label>
+    
+</div>
+    <div class="inline-row">
+      <label><input type="checkbox" id="eng"> Алфавит ENG
+      <select id="engType">
+        <option value="static">Статичный</option>
+        <option value="animated">Анимированный</option>
+      </select></label>
+    
+
+
+</div>
+    <div class="inline-row">
+      <label><input type="checkbox" id="digits"> Цифры (0 - 9)
+       <select id="digitsType">
+        <option value="static">Статичный</option>
+        <option value="animated">Анимированный</option>
+      </select></label>
+    
+
+
+</div>
+    <label><input type="checkbox" id="logo"> Логотип компании с 3D анимацией</label>
+
+    <h2>Нарисовать дополнительные эмодзи?</h2>
+    <p>Укажите количество графических элементов (эмодзи), которые нужно отрисовать.</p>
+    <div class="small-pair">
+      <label>Статичных:</label><input type="number" id="staticGraphics" value="0" min="0">
+      <label>Анимированных:</label><input type="number" id="animatedGraphics" value="0" min="0">
+    
+
+
+</div>
+
+    <h2>Сколько нужно надписей?</h2>
+    <p>Надписи — это оформленные текстовые элементы (например, названия, короткие фразы и пр.)</p>
+    <div class="small-pair">
+      <label>Статичных:</label><input type="number" id="staticTexts" value="0" min="0">
+      <label>Анимированных:</label><input type="number" id="animatedTexts" value="0" min="0">
+    
+
+
+</div>
+
+    <h2>итого: <span id="total">0</span> ₽</h2>
+  
+
+
+</div>
+
+  <script>
+    const prices = {
+      rus: { static: 1650, animated: 3300 },
+      eng: { static: 1300, animated: 2600 },
+      digits: { static: 500, animated: 1000 },
+      logo: 1000,
+      staticGraphics: 200,
+      animatedGraphics: 400,
+      staticTexts: 300,
+      animatedTexts: 500
+    };
+
+    function calculateTotal() {
+      let total = 0;
+
+      if (document.getElementById('rus').checked) {
+        const type = document.getElementById('rusType').value;
+        total += prices.rus[type];
+      }
+
+      if (document.getElementById('eng').checked) {
+        const type = document.getElementById('engType').value;
+        total += prices.eng[type];
+      }
+
+      if (document.getElementById('digits').checked) {
+        const type = document.getElementById('digitsType').value;
+        total += prices.digits[type];
+      }
+
+      if (document.getElementById('logo').checked) {
+        total += prices.logo;
+      }
+
+      const staticGraphics = parseInt(document.getElementById('staticGraphics').value) || 0;
+      const animatedGraphics = parseInt(document.getElementById('animatedGraphics').value) || 0;
+      const staticTexts = parseInt(document.getElementById('staticTexts').value) || 0;
+      const animatedTexts = parseInt(document.getElementById('animatedTexts').value) || 0;
+
+      total += staticGraphics * prices.staticGraphics;
+      total += animatedGraphics * prices.animatedGraphics;
+      total += staticTexts * prices.staticTexts;
+      total += animatedTexts * prices.animatedTexts;
+
+      document.getElementById('total').textContent = total;
+    }
+
+    document.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener('input', calculateTotal);
+      el.addEventListener('change', calculateTotal);
+    });
+
+    window.onload = calculateTotal;
+  </script>
+
+<script>
+function sendToTelegram() {
+  const details = [];
+  if (document.getElementById("rus")?.checked)
+    details.push("• Алфавит RUS (" + (document.getElementById("rusType").value === 'animated' ? 'анимированный' : 'статичный') + ")");
+  if (document.getElementById("eng")?.checked)
+    details.push("• Алфавит ENG (" + (document.getElementById("engType").value === 'animated' ? 'анимированный' : 'статичный') + ")");
+  if (document.getElementById("digits")?.checked)
+    details.push("• Цифры (" + (document.getElementById("digitsType").value === 'animated' ? 'анимированные' : 'статичные') + ")");
+  if (document.getElementById("logo")?.checked)
+    details.push("• Логотип включён");
+
+  const sg = parseInt(document.getElementById("staticGraphics")?.value || 0);
+  const ag = parseInt(document.getElementById("animatedGraphics")?.value || 0);
+  const st = parseInt(document.getElementById("staticTexts")?.value || 0);
+  const at = parseInt(document.getElementById("animatedTexts")?.value || 0);
+
+  if (sg) details.push("• " + sg + " статичных эмодзи");
+  if (ag) details.push("• " + ag + " анимированных эмодзи");
+  if (st) details.push("• " + st + " статичных надписей");
+  if (at) details.push("• " + at + " анимированных надписей");
+
+  const total = document.getElementById("total")?.textContent || "0";
+  const message =
+    "Здравствуйте!%0A%0A> ✏️ Заказ:%0A" +
+    details.map(i => "> " + i).join("%0A") +
+    "%0A%0A> 💰 Итого: " + total + " ₽%0A%0AКак можно обсудить заказ и оплату?";
+
+  const url = "https://t.me/ira_mik?text=" + message;
+  window.open(url, '_blank');
+}
+</script>
+
+
+<br><div style="text-align:center;"><button class="telegram-btn" onclick="sendToTelegram()" style="background-color:#604DB6; color:white; font-size:18px; padding:12px 24px; border:none; border-radius:28px; cursor:pointer;">ЗАКАЗАТЬ</button></div>
+</body>
+</html>
